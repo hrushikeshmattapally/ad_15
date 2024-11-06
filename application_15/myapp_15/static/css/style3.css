@@ -1,0 +1,119 @@
+/* Reset and basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Background styling */
+body {
+    background-image: linear-gradient(to bottom, #1e212d, #232731);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Top-right link */
+.top-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 0.9rem;
+}
+
+.top-link a {
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.top-link a:hover {
+    text-decoration: underline;
+}
+
+/* Form container */
+.form-container {
+    background-color: #2e3348;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Heading styling */
+h2 {
+    margin-bottom: 1.5rem;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Form group with side labels */
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group label {
+    width: 30%;
+    text-align: left;
+}
+
+.form-group input {
+    width: 65%;
+    padding: 0.75rem;
+    border: 1px solid #3a3f58;
+    border-radius: 5px;
+    background-color: #3a3f58;
+    color: #ffffff;
+}
+
+/* Password requirements message */
+.form-group input[type="password"] {
+    font-size: 1rem;
+}
+
+/* Button styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c63ff;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #5a54cc;
+}
+
+/* Hide initial password requirements feedback */
+.form-group .helptext {
+    display: none;
+}
+
+/* Display password requirements feedback on validation error */
+.form-group input:invalid + .helptext {
+    display: block;
+    color: #ff5555;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
