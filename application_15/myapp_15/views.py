@@ -44,3 +44,30 @@ def sign_in(request):
 @login_required
 def index(request):
     return render(request, 'index.html')
+def journal_list(request):
+    entries = JournalEntry.objects.all().order_by('-created_at')
+    return render(request, 'journal/journal_list.html', {'entries': entries})
+
+def journal_create(request):
+    if request.method == 'POST':
+        form = JournalEntryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('journal_list')
+    else:
+        form = JournalEntryForm()
+    return render(request, 'journal/journal_create.html', {'form': form})
+
+def journal_delete(request, pk):
+    entry = get_object_or_404(JournalEntry, pk=pk)
+    if request.method == 'POST':
+        entry.delete()
+        return redirect(reverse('journal_list'))
+    return render(request, 'journal/journal_delete_confirm.html', {'entry': entry})
+
+
+from django.shortcuts import render
+
+def notes_list(request):
+    # Add your notes retrieval logic here
+    return render(request, 'notes_list.html')

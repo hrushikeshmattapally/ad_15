@@ -1,0 +1,120 @@
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: linear-gradient(to bottom right, #4A90E2, #50C9C3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Container styling */
+.container {
+    text-align: center;
+    max-width: 600px;
+    padding-top: 50px;
+}
+
+/* Typing effect */
+.typing {
+    font-size: 2em;
+    font-weight: bold;
+    white-space: nowrap;
+    border-right: 3px solid #fff;
+    overflow: hidden;
+    width: 0;
+    animation: typing 3s steps(20) forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Settings menu */
+.settings {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.settings-icon {
+    font-size: 1.5em;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    min-width: 150px;
+}
+
+.settings-menu a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin: 8px 0;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.settings-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Options styling */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.option {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.option-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.option-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.option:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.option p {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
