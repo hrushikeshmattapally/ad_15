@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.contrib.auth import logout
 # Create your views here.
 # accounts/views.py
 from django.shortcuts import render, redirect
@@ -49,10 +51,11 @@ def sign_in(request):
 def index(request):
     print("Logged-in user:", request.user)
     return render(request, 'index.html')
+@login_required
 def journal_list(request):
     entries = JournalEntry.objects.all().order_by('-created_at')
     return render(request, 'accounts/journal_list.html', {'entries': entries})
-
+@login_required
 def journal_create(request):
     if request.method == 'POST':
         form = JournalEntryForm(request.POST)
@@ -72,7 +75,7 @@ def journal_delete(request, pk):
 
 
 from django.shortcuts import render
-
+@login_required
 def notes_list(request):
     # Add your notes retrieval logic here
     return render(request, 'notes_list.html')

@@ -123,6 +123,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+LOGIN_URL = 'sign_in'
 LOGIN_REDIRECT_URL = '/myapp_15/index/'  # Redirect users to the index page
-LOGOUT_REDIRECT_URL = '/myapp_15/accounts/sign_in'
+LOGOUT_REDIRECT_URL = 'sign_up'
+
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
