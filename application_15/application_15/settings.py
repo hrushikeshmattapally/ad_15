@@ -125,3 +125,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGIN_REDIRECT_URL = '/myapp_15/index/'  # Redirect users to the index page
+LOGOUT_REDIRECT_URL = '/myapp_15/accounts/sign_in'

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Journal</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Journal Entries</h1>
+    <a href="{% url 'journal_create' %}">Create New Entry</a>
+    <div class="journal-entry-container">
+        {% for entry in entries %}
+            <div class="journal-card">
+                <h2 class="H2">{{ entry.title }}</h2>
+                <p>{{ entry.content }}</p>
+                <p><em>{{ entry.created_at }}</em></p>
+                <form method="post" action="{% url 'journal_delete' entry.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

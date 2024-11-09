@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
 # Create your views here.
 # accounts/views.py
 from django.shortcuts import render, redirect
@@ -7,6 +7,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, LoginForm
+from .models import JournalEntry
+from .forms import JournalEntryForm
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 # Sign Up View (User Registration)
 def sign_up(request):
@@ -43,10 +47,11 @@ def sign_in(request):
 # Index View (Page Only Accessible to Logged-In Users)
 @login_required
 def index(request):
+    print("Logged-in user:", request.user)
     return render(request, 'index.html')
 def journal_list(request):
     entries = JournalEntry.objects.all().order_by('-created_at')
-    return render(request, 'journal/journal_list.html', {'entries': entries})
+    return render(request, 'accounts/journal_list.html', {'entries': entries})
 
 def journal_create(request):
     if request.method == 'POST':
@@ -56,14 +61,14 @@ def journal_create(request):
             return redirect('journal_list')
     else:
         form = JournalEntryForm()
-    return render(request, 'journal/journal_create.html', {'form': form})
+    return render(request, 'accounts/journal_create.html', {'form': form})
 
 def journal_delete(request, pk):
     entry = get_object_or_404(JournalEntry, pk=pk)
     if request.method == 'POST':
         entry.delete()
         return redirect(reverse('journal_list'))
-    return render(request, 'journal/journal_delete_confirm.html', {'entry': entry})
+    return render(request, 'accounts/journal_delete_confirm.html', {'entry': entry})
 
 
 from django.shortcuts import render
