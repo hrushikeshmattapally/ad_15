@@ -53,14 +53,17 @@ def index(request):
     return render(request, 'index.html')
 @login_required
 def journal_list(request):
-    entries = JournalEntry.objects.all().order_by('-created_at')
+    entries = JournalEntry.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'accounts/journal_list.html', {'entries': entries})
 @login_required
 def journal_create(request):
     if request.method == 'POST':
         form = JournalEntryForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Ensure the user is assigned to the journal entry
+            journal_entry = form.save(commit=False)  # Don't save yet, to add the user
+            journal_entry.user = request.user  # Set the logged-in user as the owner
+            journal_entry.save()  # Now save the journal entry
             return redirect('journal_list')
     else:
         form = JournalEntryForm()

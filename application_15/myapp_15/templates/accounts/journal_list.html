@@ -7,13 +7,23 @@
 </head>
 <body>
     <h1>Journal Entries</h1>
+
+    <!-- Displaying logged-in user information -->
+    <p>Welcome, {{ request.user.username }}!</p>
+
+    <!-- Link to create a new journal entry -->
     <a href="{% url 'journal_create' %}">Create New Entry</a>
+
     <div class="journal-entry-container">
         {% for entry in entries %}
             <div class="journal-card">
                 <h2 class="H2">{{ entry.title }}</h2>
                 <p>{{ entry.content }}</p>
-                <p><em>{{ entry.created_at }}</em></p>
+                <p><em>Created at: {{ entry.created_at }}</em></p>
+                
+                <!-- Add user info to each entry if necessary -->
+                <p>Created by: {{ entry.user.username }}</p> <!-- Display the user who created this entry -->
+
                 <form method="post" action="{% url 'journal_delete' entry.pk %}">
                     {% csrf_token %}
                     <button type="submit">Delete</button>
@@ -23,4 +33,5 @@
     </div>
 </body>
 </html>
+
 
