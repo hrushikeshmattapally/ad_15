@@ -22,3 +22,10 @@ class JournalEntryForm(forms.ModelForm):
     class Meta:
         model = JournalEntry
         fields = ['title', 'content']
+
+from .models import Note, Label
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'content', 'labels', 'pinned', 'is_archived', 'is_trashed', 'reminder_date']

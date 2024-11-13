@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Notes{% endblock %}
+{% load static %}
+
+{% block content %}
+    <h1>Your Notes</h1>
+    <div class="notes-list">
+        {% for note in notes %}
+            <div class="note">
+                <h4>{{ note.title }}</h4>
+                <p>{{ note.content }}</p>
+                <a href="{% url 'note_update' note.id %}">Edit</a>
+                <a href="{% url 'note_delete' note.id %}">Delete</a>
+            </div>
+        {% empty %}
+            <p>No notes available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

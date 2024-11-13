@@ -1,0 +1,86 @@
+<!-- templates/notes/note_list.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header>
+    <input type="text" class="search-bar" placeholder="Search Notes">
+    <div class="settings">
+        <span>Settings</span>
+        <img src="{% static 'img_notenest.png' %}" alt="Profile" class="profile-icon">
+    </div>
+</header>
+</div>
+<!--<div class="header-container">
+    <h1>Create a New Note</h1>
+    <form method="post" action="{% url 'note_create' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="add-btn">Add a note</button>
+    </form>
+</div> -->
+
+<div class="form-container">
+    <h1>Create a New Note</h1>
+    
+    <form method="post" action="{% url 'note_create' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="submit-button">Add a note</button>
+    </form>
+</div>
+
+<div class="notes-container">
+    {% for note in notes %}
+        <div class="note-item" onclick="openNote({{ note.id }})">
+            <h2>{{ note.title }}</h2>
+            <p>{{ note.content }}</p>
+            <!-- Edit and Delete Buttons -->
+            <div class="note-actions">
+                <a href="{% url 'note_update' note.id %}" class="edit-btn">Edit</a>
+                <a href="{% url 'note_delete' note.id %}" class="edit-btn">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No notes available.</p>
+    {% endfor %}
+</div>
+
+<!-- Modal for showing the detailed note -->
+<div id="note-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">x</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-content"></p>
+    </div>
+</div>
+<script>
+    // Function to open the note in the modal
+    function openNote(noteId) {
+        // Simulating fetching note details, replace with AJAX request for dynamic data
+        fetch(`/note/${noteId}/`)
+        .then(response => response.json())  // Parse the response as JSON
+        .then(data => {
+            if (data.error) {
+                alert(data.error);  // If there's an error, show an alert
+            } else {
+                // Populate the modal with note details
+                document.getElementById("modal-title").textContent = data.title;
+                document.getElementById("modal-content").textContent = data.content;
+
+                // Display the modal
+                document.getElementById("note-modal").style.display = "block";
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching note details:", error);
+        });
+    }
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("note-modal").style.display = "none";
+    }
+</script>
+<h2>Your Notes</h2>
+{% endblock %}

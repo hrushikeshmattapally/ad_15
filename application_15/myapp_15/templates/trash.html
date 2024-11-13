@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Trash{% endblock %}
+{% block content %}
+    <h2>Trash</h2>
+    <div class="notes-list">
+        {% for note in trashed_notes %}
+            <div class="note">
+                <h4>{{ note.title }}</h4>
+                <a href="{% url 'restore_note' note.id %}">Restore</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
