@@ -28,4 +28,4 @@ from .models import Note, Label
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'content', 'labels', 'pinned', 'is_archived', 'is_trashed', 'reminder_date']
+        fields = ['title', 'content', 'reminder_date']

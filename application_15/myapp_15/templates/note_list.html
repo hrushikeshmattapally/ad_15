@@ -4,22 +4,23 @@
 {% block content %}
 <header>
     <input type="text" class="search-bar" placeholder="Search Notes">
-    <div class="settings">
-        <span>Settings</span>
+    <div class="note-logo">
+        <a href="{% url 'index' %}">
         <img src="{% static 'img_notenest.png' %}" alt="Profile" class="profile-icon">
+        </a>
+        <h6>Home</h6>
+    </div>  
+    <div class="settings">
+        <div class="settings-icon" onclick="toggleSettingsMenu()">⚙️</div>
+        <div class="settings-menu" id="settingsMenu">
+            <a href="#">Change Theme</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            <a href="#">Other Settings</a>
+        </div>
     </div>
 </header>
 </div>
-<!--<div class="header-container">
-    <h1>Create a New Note</h1>
-    <form method="post" action="{% url 'note_create' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="add-btn">Add a note</button>
-    </form>
-</div> -->
-
-<div class="form-container">
+<div class="form-container1">
     <h1>Create a New Note</h1>
     
     <form method="post" action="{% url 'note_create' %}">
@@ -30,7 +31,7 @@
         <button type="submit" class="submit-button">Add a note</button>
     </form>
 </div>
-
+<h2>Your Notes</h2>
 <div class="notes-container">
     {% for note in notes %}
         <div class="note-item" onclick="openNote({{ note.id }})">
@@ -82,5 +83,5 @@
         document.getElementById("note-modal").style.display = "none";
     }
 </script>
-<h2>Your Notes</h2>
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

@@ -1,12 +1,21 @@
-<!-- templates/notes/note_form.html -->
-{% extends "base.html" %}
 
+{% extends "base.html" %}
 {% block content %}
-<h2>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Note</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
-<a href="{% url 'note_list' %}">Back to notes</a>
+<div class="form-container">
+  <h1>Create a New Note</h1>
+  <form method="post" action="{% url 'note_create' %}">
+      {% csrf_token %}
+      <div class="form-group">
+          {{ form.as_p }}
+      </div>
+      <button type="submit" class="submit-button">Save Note</button>
+  </form>
+  
+  <p><a href="{% url 'note_list' %}" class="back-link">Back to Notes List</a></p>
+</div>
 {% endblock %}
+
+
+
+
+    

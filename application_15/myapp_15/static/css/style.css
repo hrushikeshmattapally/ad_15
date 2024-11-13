@@ -384,16 +384,28 @@ header {
 
 
 /* styles.css */
-
-
-
-.form-container {
+.form-container1{
     background-color: #fff;
+    max-width: 300px;
+    width: 70%;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+}
+
+
+.form-container {
+    background-color: #fff;
+    max-width: 900px;
+    width: 70%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    text-align: center;
+    height: 500px;
 }
 
 h1 {
@@ -410,7 +422,7 @@ h1 {
 }
 
 input[type="text"], textarea, select {
-    width: 100%;
+    width: 70%;
     padding: 10px;
     margin: 5px 0;
     border-radius: 4px;
@@ -441,4 +453,82 @@ input[type="text"], textarea, select {
 
 .back-link:hover {
     text-decoration: underline;
+}
+
+.settings {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.settings-icon {
+    font-size: 2em;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    min-width: 150px;
+}
+
+.settings-menu a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin: 8px 0;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.settings-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.note-logo{
+    width: 150px; /* Set width */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s ease; /* Add hover effect */
+    font-size: 3em;
+    top: 10px; /* Distance from the top */
+    right: 10px;
+}
+
+.note-logo:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+.note-logo h6{
+    font-size: small;
+}
+
+/* styles.css */
+
+/* Notes container styling */
+.notes-container {
+    background-color: #ffffff; /* Background color */
+    padding: 20px; /* Space inside the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 1100px; /* Optional: Limit width */
+   /* margin: 20px auto;  Center it horizontally */
+}
+
+/* Additional content styling inside notes container */
+.notes-container h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.notes-container p {
+    color: #555;
+    font-size: 16px;
 }
