@@ -24,11 +24,12 @@ class Note(models.Model):
     content = models.TextField(blank=True, null=True)
     pinned = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
-    is_trashed = models.BooleanField(default=False)
-    reminder_date = models.DateTimeField(null=True, blank=True)
+    is_trashed = models.BooleanField(default=True)
+    reminder_date = models.DateField(null=True, blank=True)
     labels = models.ManyToManyField(Label, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
+    

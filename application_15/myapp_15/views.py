@@ -11,7 +11,7 @@ from .models import JournalEntry
 from .forms import JournalEntryForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-
+from .forms import NoteForm
 # Sign Up View (User Registration)
 def sign_up(request):
     if request.method == 'POST':
@@ -78,11 +78,10 @@ def journal_delete(request, pk):
 from django.shortcuts import render
 @login_required
 def notes_list(request):
-    notes = Note.objects.filter(user=request.user).order_by('-created_at')
+    notes = Note.objects.filter(user=request.user, is_trashed=False).order_by('-created_at')
     return render(request, 'note_list.html', {'notes': notes})
 
 from .models import Note
-from .forms import NoteForm
 from django.contrib.auth.decorators import login_required
 
 def notes_view(request):
@@ -90,14 +89,20 @@ def notes_view(request):
     return render(request, 'notes.html')
 
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
 from .models import Note, Label
 
 def notes(request):
     notes = Note.objects.filter(is_archived=False, is_trashed=False)
     return render(request, 'notes.html', {'notes': notes})
 
-def reminders(request):
-    reminders = Note.objects.filter(reminder_date__isnull=False, is_trashed=False)
+
+def reminders(request, date=None):
+    if date:
+        reminders = Note.objects.filter(reminder_date=date)
+    else:
+        reminders = Note.objects.filter(user=request.user,reminder_date__isnull=False)
     return render(request, 'reminders.html', {'notes': reminders})
 
 def edit_labels(request):
@@ -105,12 +110,30 @@ def edit_labels(request):
     return render(request, 'edit_labels.html', {'labels': labels})
 
 def archive(request):
-    archived_notes = Note.objects.filter(is_archived=True)
+    archived_notes = Note.objects.filter(user=request.user,is_archived=True)
     return render(request, 'archive.html', {'notes': archived_notes})
 
+def toggle_archive(request, note_id):
+    note = get_object_or_404(Note, pk=note_id)
+    note.is_archived = not note.is_archived
+    note.save()
+    return redirect('note_list')
+
 def trash(request):
-    trashed_notes = Note.objects.filter(is_trashed=True)
+    trashed_notes = Note.objects.filter(user=request.user,is_trashed=True)
     return render(request, 'trash.html', {'notes': trashed_notes})
+def restore_note(request, note_id):
+    note = get_object_or_404(Note, pk=note_id)
+    note.is_trashed = False
+    note.save()
+    return redirect('note_list')
+
+def search_notes(request):
+    query = request.GET.get('q')  # 'q' corresponds to the input's name or query parameter
+    results = []
+    if query:
+        results = Note.objects.filter(title=query,user=request.user,is_trashed=False)  # Adjust the field to your model's attributes
+    return render(request, 'search_results.html', {'results': results, 'query': query})
 
 def add_note(request):
     if request.method == 'POST':
@@ -148,11 +171,8 @@ def note_update(request, pk):
         form = NoteForm(instance=note)
     return render(request, 'note_form.html', {'form': form})
 
-@login_required
-def note_delete(request, pk):
-    note = Note.objects.get(pk=pk, user=request.user)
-    note.delete()
-    return redirect('note_list')
+
+
 
 from django.http import JsonResponse
 from .models import Note
@@ -163,6 +183,50 @@ def get_note_details(request, note_id):
         note = Note.objects.get(pk=note_id)
 
         # Return the note title and content as JSON
+        return JsonResponse({
+            'title': note.title,
+            'content': note.content,
+        })
+    except Note.DoesNotExist:
+        return JsonResponse({'error': 'Note not found'}, status=404)
+
+def delete_note(request,pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    note.is_trashed = True
+    note.save()
+    return redirect('note_list') 
+
+def restore_note(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    note.is_trashed = False
+    note.save()
+    return redirect('note_list')
+
+def delete_note_permanently(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        note.delete()
+        return redirect('trash')
+    else:
+        return render(request, 'note_delete_confirm.html', {'note': note})
+
+#def delete_note(request, pk):
+    # Get the note object with the primary key (pk)
+ #   note = get_object_or_404(Note, pk=pk, user=request.user)
+
+  #  if request.method == 'POST':
+        # Delete the note
+   #     note.delete()
+    #    # Redirect to the notes list page after deletion
+     #   return redirect('note_list')  # Redirect to the page that lists all notes
+
+    # If not a POST request, render a confirmation page
+   # return render(request, 'note_delete_confirm.html', {'note': note})
+
+def note_detail(request, id):
+    try:
+        note = Note.objects.get(id=id)
         return JsonResponse({
             'title': note.title,
             'content': note.content,

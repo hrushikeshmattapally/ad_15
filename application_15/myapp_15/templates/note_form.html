@@ -13,6 +13,25 @@
   
   <p><a href="{% url 'note_list' %}" class="back-link">Back to Notes List</a></p>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const textareas = document.querySelectorAll('textarea');
+
+      textareas.forEach(textarea => {
+          textarea.addEventListener('input', function () {
+              // Reset the height to calculate the new size
+              this.style.height = 'auto';
+              // Set the new height based on scrollHeight
+              this.style.height = this.scrollHeight + 'px';
+          });
+
+          // Initialize height based on existing content
+          textarea.style.height = 'auto';
+          textarea.style.height = textarea.scrollHeight + 'px';
+      });
+  });
+</script>
+
 {% endblock %}
 
 

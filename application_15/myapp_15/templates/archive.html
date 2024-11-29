@@ -1,12 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Archive{% endblock %}
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <h2>Archive</h2>
-    <div class="notes-list">
-        {% for note in archived_notes %}
-            <div class="note">
-                <h4>{{ note.title }}</h4>
-            </div>
-        {% endfor %}
+<h1>Archived Notes</h1>
+{% for note in notes %}
+    <div class="archive">
+        <h2>{{ note.title }}</h2>
+        <div style="white-space: pre-wrap;">{{ note.content }}</div>
+        <a href="{% url 'toggle_archive' note.id %}">Unarchive</a>
     </div>
+{% endfor %}
 {% endblock %}

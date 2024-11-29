@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        color: #444;
+        margin-top: 20px;
+    }
+
+    /* Results Section */
+    ul {
+        list-style-type: none;
+        padding: 0;
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    li {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    li:last-child {
+        border-bottom: none;
+    }
+
+    strong {
+        color: #2c3e50;
+        font-size: 18px;
+    }
+
+    p {
+        text-align: center;
+        color: #666;
+    }
+
+    /* Hover Effect */
+    li:hover {
+        background-color: #f0f0f0;
+        transition: background-color 0.3s ease;
+    }
+
+    /* No Results Message */
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+    <h1>Search Results for "{{ query|escape }}"</h1>
+    {% if results %}
+        <ul>
+            {% for note in results %}
+                <li>
+                    <h2>{{ note.title }}</h2>
+                    <div style="white-space: pre-wrap;">{{ note.content }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>

@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-)5ktuef!34#tw)c)5#*sa7amdekb$id%x6kwn3ck82)p--sgr-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap_datepicker',
     'myapp_15',
     'django.contrib.admin',
     'django.contrib.auth',

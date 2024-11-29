@@ -7,14 +7,41 @@
     <h1>Your Notes</h1>
     <div class="notes-list">
         {% for note in notes %}
-            <div class="note">
+            <div class="note" id="note-{{ note.id }}">
                 <h4>{{ note.title }}</h4>
                 <p>{{ note.content }}</p>
                 <a href="{% url 'note_update' note.id %}">Edit</a>
-                <a href="{% url 'note_delete' note.id %}">Delete</a>
+                <button class="delete-btn" data-id="{{ note.id }}">Delete</button>
             </div>
         {% empty %}
             <p>No notes available.</p>
         {% endfor %}
     </div>
+    
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const noteId = this.dataset.id;
+    
+                fetch(`/delete/${noteId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        // Remove the note element from the page
+                        document.getElementById(`note-${noteId}`).remove();
+                        alert(data.message);
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+    
 {% endblock %}
